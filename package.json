@@ -1,0 +1,64 @@
+{
+  "name": "@attmonk/velvet-user-data",
+  "version": "0.2.1",
+  "description": "Optional encrypted account persistence and browser personalization for Velvet.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/attmonk/velvet-plugin-user-data.git"
+  },
+  "exports": {
+    ".": "./src/server/index.js",
+    "./server": {
+      "import": "./src/server/index.js"
+    },
+    "./server/personalization-data": {
+      "import": "./src/server/personalization-data.js"
+    },
+    "./client": {
+      "import": "./dist/client/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./src/server/index.js",
+  "files": [
+    "src/server",
+    "dist/client",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "sideEffects": false,
+  "dependencies": {
+    "better-sqlite3": "^12.11.1"
+  },
+  "devDependencies": {
+    "@tanstack/react-db": "^0.1.85",
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.28.1",
+    "react": "^19.1.1",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  },
+  "scripts": {
+    "build": "npm run build:client && tsc -p tsconfig.json --emitDeclarationOnly",
+    "build:client": "esbuild src/client/plugin.ts --bundle --format=esm --platform=browser --target=es2022 --outfile=dist/client/index.js",
+    "type-check": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --config vitest.config.ts",
+    "test:watch": "vitest --config vitest.config.ts",
+    "lint": "echo 'add eslint when adopted by consuming apps'",
+    "prepublishOnly": "npm run build && npm run type-check && npm test"
+  },
+  "keywords": [
+    "velvet",
+    "user-data",
+    "persistence",
+    "personalization",
+    "oidc",
+    "favorites",
+    "history",
+    "stash",
+    "media"
+  ]
+}

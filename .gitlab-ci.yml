@@ -1,0 +1,29 @@
+# GitLab mirror verification only.
+#
+# Package publishing for @attmonk/velvet-user-data is handled by
+# GitHub Actions in .github/workflows/publish-package.yml.
+
+default:
+  image: node:24
+  before_script:
+    - npm ci --no-audit --no-fund
+
+stages:
+  - verify
+
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - node_modules/
+
+type-check:
+  stage: verify
+  script:
+    - npm run type-check
+
+test:
+  stage: verify
+  script:
+    - npm test
